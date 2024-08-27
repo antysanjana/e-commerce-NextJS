@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
-import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AuroraBackground } from "./ui/aurora-background";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ export function LoginForm() {
     password: "",
   });
 
-  const [redirect, setRedirect] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e) => {
     setFormData({
@@ -50,14 +50,8 @@ export function LoginForm() {
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
-      if (data.success) {
-        setRedirect(true); // Trigger redirection
-      } else {
-        console.error("Login failed:", data.message);
-        // Display error message to user
-      }
       if (response.ok) {
+        router.push("/home");
         //Need to redirect to home page using react router
       }
     } catch (error) {
@@ -65,10 +59,6 @@ export function LoginForm() {
       // Display a user-friendly error message
     }
   };
-
-  if (redirect) {
-    return <Navigate to="/home" />;
-  }
 
   return (
     <AuroraBackground>
