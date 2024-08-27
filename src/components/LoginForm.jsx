@@ -1,56 +1,84 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
-
+import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AuroraBackground } from "./ui/aurora-background";
 
-export function SignUpForm() {
+export function LoginForm() {
   const [formData, setFormData] = useState({
     userName: "",
     password: "",
   });
 
-  // Handle input changes
+  const [redirect, setRedirect] = useState(false);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted");
-    console.log("User Name:", formData.userName);
-    console.log("Password:", formData.password);
-    // Here you can also process the form data, send it to an API, etc.
+
+    let loginurl = "https://dummyjson.com/auth/login";
+
+    let payload = {
+      username: formData.userName, // Ensure this matches API expectations
+      password: formData.password, // Ensure this matches API expectations
+      expiresInMins: 30, // Optional
+    };
+
+    console.log(payload);
+
+    try {
+      const response = await fetch(loginurl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      console.log("Response: ", response);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        setRedirect(true); // Trigger redirection
+      } else {
+        console.error("Login failed:", data.message);
+        // Display error message to user
+      }
+      if (response.ok) {
+        //Need to redirect to home page using react router
+      }
+    } catch (error) {
+      console.error("Error occurred during login:", error);
+      // Display a user-friendly error message
+    }
   };
+
+  if (redirect) {
+    return <Navigate to="/home" />;
+  }
 
   return (
     <AuroraBackground>
-      <motion.div
-        // initial={{ opacity: 0.0, y: 40 }}
-        // whileInView={{ opacity: 1, y: 0 }}
-        // transition={{
-        //   delay: 0.3,
-        //   duration: 0.8,
-        //   ease: "easeInOut",
-        // }}
-        className="relative flex flex-col gap-4 items-center justify-center px-4"
-      >
+      <motion.div className="relative flex flex-col gap-4 items-center justify-center px-4">
         <div className="border border-slate-500 min-w-[450px] mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
           <h1 className="font-bold text-center text-3xl text-neutral-800 dark:text-neutral-300">
             Log in
           </h1>
 
-          <form className="my-8" onSubmit={handleSubmit}>
+          <form className="my-8">
             <LabelInputContainer className="mb-4">
               <Label htmlFor="user">User Name</Label>
               <Input
@@ -74,7 +102,7 @@ export function SignUpForm() {
             <Link href={"/home"}>
               <button
                 className="mt-8 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-                type="submit"
+                onClick={handleSubmit}
               >
                 Log in &rarr;
                 <BottomGradient />
