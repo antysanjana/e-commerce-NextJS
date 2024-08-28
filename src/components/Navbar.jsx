@@ -20,6 +20,13 @@ export function Navbar({ className }) {
       >
         <div className="border rounded-full dark:bg-black dark:border-white/[0.4] bg-white">
           <Menu setActive={setActive}>
+            <Link href={"/products"}>
+              <MenuItem
+                setActive={setActive}
+                active={active}
+                item="Products"
+              ></MenuItem>
+            </Link>
             <MenuItem setActive={setActive} active={active} item="Brands">
               <div className="flex flex-col space-y-4 text-sm">
                 <HoveredLink href="/web-dev">W7</HoveredLink>
