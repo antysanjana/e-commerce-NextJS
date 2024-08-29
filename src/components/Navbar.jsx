@@ -7,10 +7,6 @@ import { cn } from "@/lib/utils";
 export function Navbar({ className }) {
   const [isMenuVisible, setIsMenuVisible] = useState(true);
 
-  const handleClick = () => {
-    setIsMenuVisible(!isMenuVisible); // Toggle menu visibility
-  };
-
   const [active, setActive] = useState(null);
 
   return (

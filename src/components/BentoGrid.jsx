@@ -7,6 +7,7 @@ export function BentoGridDemo() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+    //API for getting all products
     const fetchProducts = async () => {
       const getProductsURL = "https://dummyjson.com/products";
 
@@ -22,7 +23,7 @@ export function BentoGridDemo() {
         }
 
         const data = await response.json();
-        console.log(data);
+
         setItems(data.products || []); // Assuming the API returns a `products` field
       } catch (error) {
         console.error("Error occurred during fetching products:", error);
