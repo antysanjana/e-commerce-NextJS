@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 export const BentoGrid = ({ className, children }) => {
   return (
     <div
@@ -14,12 +15,18 @@ export const BentoGrid = ({ className, children }) => {
 };
 
 export const BentoGridItem = ({
+  itemID,
   className,
   title,
   description,
   category,
   images,
 }) => {
+  const router = useRouter();
+  const handleClick = (id) => {
+    router.push(`/products/${id}`);
+  };
+
   return (
     <div
       className={cn(
@@ -45,6 +52,12 @@ export const BentoGridItem = ({
         <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
           {category}
         </div>
+        <button
+          onClick={() => handleClick(itemID)}
+          className="mt-4 px-2 py-1 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
+        >
+          See Details
+        </button>
       </div>
     </div>
   );

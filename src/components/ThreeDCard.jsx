@@ -4,17 +4,16 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export function ThreeDCardDemo({ id }) {
   const [product, setProduct] = useState([]);
 
   //API for getting single product
   const fetchProduct = async () => {
-    const getProductURL = `https://dummyjson.com/products/${id}`;
+    const getProductDataURL = `https://dummyjson.com/products/${id}`;
 
     try {
-      const response = await fetch(getProductURL);
+      const response = await fetch(getProductDataURL);
 
       if (!response.ok) {
         throw new Error(
@@ -23,7 +22,7 @@ export function ThreeDCardDemo({ id }) {
       }
 
       const productData = await response.json();
-      console.log(productData);
+      // console.log(productData);
       setProduct(productData || []);
     } catch (error) {
       console.error("Error occurred during fetching products:", error);
@@ -31,7 +30,7 @@ export function ThreeDCardDemo({ id }) {
   };
   fetchProduct();
 
-  const productImage = product?.images[0];
+  const productImage = product?.thumbnail;
   return (
     <CardContainer className="inter-var">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
@@ -49,9 +48,9 @@ export function ThreeDCardDemo({ id }) {
         </CardItem>
         <CardItem translateZ="100" className="w-full mt-4">
           <Image
-            src={`${productImage}`}
-            height={100}
-            width={100}
+            src={productImage}
+            height={300}
+            width={300}
             className="rounded-xl group-hover/card:shadow-xl"
             alt={product.title || "Product image"}
           />
