@@ -26,8 +26,6 @@ export function LoginForm() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    let getuserURL = "https://dummyjson.com/auth/me";
     let loginURL = "https://dummyjson.com/auth/login";
     //Body of POST request
     let payload = {
@@ -46,6 +44,7 @@ export function LoginForm() {
 
       const data = await response.json();
       const { token } = data;
+      localStorage.setItem("authToken", token);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -54,23 +53,6 @@ export function LoginForm() {
       if (response.ok) {
         router.push("/home");
         //Need to redirect to home page using react router
-      }
-
-      //API to get user data
-      const userData = await fetch(getuserURL, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const userinfo = await userData.json();
-      if (!userData.ok) {
-        throw new Error("User data not found due to network issue");
-      }
-
-      if (userData.ok) {
-        console.log("User Info: ", userinfo);
       }
     } catch (error) {
       console.error("Error occurred during login:", error);

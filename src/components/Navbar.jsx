@@ -3,11 +3,13 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export function Navbar({ className }) {
   const [isMenuVisible, setIsMenuVisible] = useState(true);
 
   const [active, setActive] = useState(null);
+  const router = useRouter();
 
   return (
     <div className="flex">
