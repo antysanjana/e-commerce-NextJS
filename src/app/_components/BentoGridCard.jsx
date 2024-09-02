@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
+import { BentoGrid, BentoGridItem } from "../../components/ui/bento-grid";
 import { useState, useEffect } from "react";
-import { ThreeDCardDemo } from "./ThreeDCard";
 
-export function BentoGridDemo() {
+export function BentoGridCard() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {

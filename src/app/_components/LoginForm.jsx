@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { AuroraBackground } from "./ui/aurora-background";
+import { AuroraBackground } from "../../components/ui/aurora-background";
 import { useRouter } from "next/navigation";
+import { login } from "@/api/request";
 
 export function LoginForm() {
   const [formData, setFormData] = useState({
@@ -24,40 +25,19 @@ export function LoginForm() {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let loginURL = "https://dummyjson.com/auth/login";
     //Body of POST request
     let payload = {
       username: formData.userName, // Ensure this matches API expectations
       password: formData.password, // Ensure this matches API expectations
-      expiresInMins: 30, // Optional
     };
 
-    try {
-      //API call for login
-      const response = await fetch(loginURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    const response = login(payload);
 
-      const data = await response.json();
-      const { token } = data;
-      localStorage.setItem("authToken", token);
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      if (response.ok) {
-        router.push("/home");
-        //Need to redirect to home page using react router
-      }
-    } catch (error) {
-      console.error("Error occurred during login:", error);
-      // Display a user-friendly error message
-    }
+    const { token } = response;
+    localStorage.setItem("authToken", token);
+    router.push("/home");
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
+import { CardBody, CardContainer, CardItem } from "../../components/ui/3d-card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

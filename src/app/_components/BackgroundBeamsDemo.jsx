@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { BackgroundBeams } from "./ui/background-beams";
+import { BackgroundBeams } from "../../components/ui/background-beams";
 import Image from "next/image";
 
 export function BackgroundBeamsDemo() {

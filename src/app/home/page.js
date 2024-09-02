@@ -1,7 +1,7 @@
 "use client";
 
-import { Navbar } from "@/components/Navbar";
-import { TypewriterEffectSmoothDemo } from "@/components/TypewriterEffect";
+import { Navbar } from "@/app/_components/Navbar";
+import { TypewriterEffectSmoothDemo } from "@/app/_components/TypewriterEffect";
 
 function page() {
   return (

@@ -1,4 +1,4 @@
-import { BentoGridDemo } from "@/components/BentoGrid";
+import { BentoGridCard } from "@/app/_components/BentoGridCard";
 import React from "react";
 
 export default async function page() {
@@ -7,7 +7,7 @@ export default async function page() {
       <h1 className="relative py-6 z-10 md:text-7xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600  text-center font-sans font-semibold">
         Our Products
       </h1>
-      <BentoGridDemo />
+      <BentoGridCard />
     </div>
   );
 }

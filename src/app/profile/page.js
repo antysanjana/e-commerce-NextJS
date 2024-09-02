@@ -1,5 +1,5 @@
 import React from "react";
-import { BackgroundBeamsDemo } from "@/components/BackgroundBeamsDemo";
+import { BackgroundBeamsDemo } from "@/app/_components/BackgroundBeamsDemo";
 
 function page() {
   return (
