@@ -1,38 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackgroundBeams } from "./ui/background-beams";
 import Image from "next/image";
 
 export function BackgroundBeamsDemo() {
   const [userData, setUserData] = useState([]);
-  let getuserURL = "https://dummyjson.com/auth/me";
-  const fetchUserData = async () => {
-    const token = localStorage.getItem("authToken");
+  useEffect(() => {
+    let getuserURL = "https://dummyjson.com/auth/me";
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("authToken");
 
-    try {
-      const userData = await fetch(getuserURL, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const userData = await fetch(getuserURL, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const userInfo = await userData.json();
-      if (!userData.ok) {
-        throw new Error("User data not found due to network issue");
+        const userInfo = await userData.json();
+        if (!userData.ok) {
+          throw new Error("User data not found due to network issue");
+        }
+
+        if (userData.ok) {
+          console.log("User Info: ", userInfo);
+        }
+        setUserData(userInfo);
+      } catch (error) {
+        console.error("Error occurred during login:", error);
+        // Display a user-friendly error message
       }
+    };
+    fetchUserData();
+  }, []);
 
-      if (userData.ok) {
-        console.log("User Info: ", userInfo);
-      }
-      setUserData(userInfo);
-    } catch (error) {
-      console.error("Error occurred during login:", error);
-      // Display a user-friendly error message
-    }
-  };
-
-  fetchUserData();
   const userImageURL = userData?.image;
 
   return (
