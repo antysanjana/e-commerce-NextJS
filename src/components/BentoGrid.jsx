@@ -39,7 +39,7 @@ export function BentoGridDemo() {
         {items.map((item, i) => (
           <BentoGridItem
             key={i}
-            itemID={i}
+            itemID={item.id}
             title={item.title}
             description={item.description}
             category={item.category}

@@ -30,6 +30,26 @@ export function ThreeDCardDemo({ id }) {
   };
   fetchProduct();
 
+  const handleClick = () => {
+    const getProductDataURL = `https://dummyjson.com/products/${id}`;
+    try {
+      const response = fetch(getProductDataURL, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Network response was not ok. Status: ${response.status}`
+        );
+      }
+
+      const deletedProductData = response.json();
+      console.log(deletedProductData);
+    } catch (error) {
+      console.error("Error occurred during fetching products:", error);
+    }
+  };
+
   const productImage = product?.thumbnail;
   return (
     <CardContainer className="inter-var">
@@ -65,13 +85,14 @@ export function ThreeDCardDemo({ id }) {
           >
             Buy now →
           </CardItem>
-          <CardItem
+          <button
+            onClick={handleClick}
             translateZ={20}
             as="button"
             className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
           >
             Delete Product
-          </CardItem>
+          </button>
         </div>
       </CardBody>
     </CardContainer>
