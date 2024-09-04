@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { CardBody, CardContainer, CardItem } from "../../components/ui/3d-card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getSingleProduct } from "@/api/request";
 
 export function ThreeDCardDemo({ id }) {
   const [product, setProduct] = useState([]);
@@ -36,26 +37,17 @@ export function ThreeDCardDemo({ id }) {
     }
   };
 
+  //API for getting single product
+  const singleProduct = async () => {
+    getSingleProduct({ id }).then((product) => {
+      setProduct(product);
+    });
+  };
+
   useEffect(() => {
-    //API for getting single product
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(getProductDataURL);
-
-        if (!response.ok) {
-          throw new Error(
-            `Network response was not ok. Status: ${response.status}`
-          );
-        }
-
-        const productData = await response.json();
-        setProduct(productData || []);
-      } catch (error) {
-        console.error("Error occurred during fetching products:", error);
-      }
-    };
-    fetchProduct();
-  }, [getProductDataURL, id]);
+    singleProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const productImage = product?.thumbnail;
   return (

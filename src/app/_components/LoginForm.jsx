@@ -34,7 +34,7 @@ export function LoginForm() {
     };
 
     const response = login(payload);
-
+    console.log("Login: ", response);
     const { token } = response;
     localStorage.setItem("authToken", token);
     router.push("/home");

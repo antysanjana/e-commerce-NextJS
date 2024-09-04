@@ -2,35 +2,24 @@
 import React from "react";
 import { BentoGrid, BentoGridItem } from "../../components/ui/bento-grid";
 import { useState, useEffect } from "react";
+import { getAllProducts } from "@/api/request";
 
 export function BentoGridCard() {
   const [items, setItems] = useState([]);
 
+  //Get all products from api call
+  const allProducts = async () => {
+    try {
+      const allProducts = await getAllProducts();
+      setItems(allProducts.products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   useEffect(() => {
-    //API for getting all products
-    const fetchProducts = async () => {
-      const getProductsURL = "https://dummyjson.com/products";
-
-      try {
-        const response = await fetch(getProductsURL, {
-          method: "GET",
-        });
-
-        if (!response.ok) {
-          throw new Error(
-            `Network response was not ok. Status: ${response.status}`
-          );
-        }
-
-        const data = await response.json();
-
-        setItems(data.products || []); // Assuming the API returns a `products` field
-      } catch (error) {
-        console.error("Error occurred during fetching products:", error);
-      }
-    };
-    fetchProducts();
-  }, []); // Empty dependency array means this runs once when the component mounts
+    allProducts(); // Call the function when the component mounts
+  }, []);
 
   return (
     <div>
