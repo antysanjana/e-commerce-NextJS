@@ -24,6 +24,25 @@ export const login = async ({ username, password }) => {
   }
 };
 
+export const getUser = async (token) => {
+  const getUserDataURL = `${BASE_URL}/${ME_API}`;
+  try {
+    const response = await fetch(getUserDataURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Login failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error during login:", error);
+  }
+};
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export const getAllProducts = async () => {
   const getAllProuductsURL = `${BASE_URL}/${PRODUCTS_API}`;

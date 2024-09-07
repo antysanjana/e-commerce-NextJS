@@ -2,40 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { BackgroundBeams } from "../../components/ui/background-beams";
 import Image from "next/image";
+import { useAuth } from "@/providers/auth-provider";
 
 export function BackgroundBeamsDemo() {
   const [userData, setUserData] = useState([]);
-  useEffect(() => {
-    let getuserURL = "https://dummyjson.com/auth/me";
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("authToken");
+  const { user } = useAuth();
 
-      try {
-        const userData = await fetch(getuserURL, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const userInfo = await userData.json();
-        if (!userData.ok) {
-          throw new Error("User data not found due to network issue");
-        }
-
-        if (userData.ok) {
-          console.log("User Info: ", userInfo);
-        }
-        setUserData(userInfo);
-      } catch (error) {
-        console.error("Error occurred during login:", error);
-        // Display a user-friendly error message
-      }
-    };
-    fetchUserData();
-  }, []);
-
-  const userImageURL = userData?.image;
+  const userImageURL = user?.image;
 
   return (
     <div className="h-screen w-full rounded-md bg-neutral-950 relative flex flex-col items-center justify-center antialiased">

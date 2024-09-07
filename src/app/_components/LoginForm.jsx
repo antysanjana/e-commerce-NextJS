@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { AuroraBackground } from "../../components/ui/aurora-background";
 import { useRouter } from "next/navigation";
 import { login } from "@/api/request";
+import { useAuth } from "@/providers/auth-provider";
+import { getUser } from "@/api/request";
 
 export function LoginForm() {
   const [formData, setFormData] = useState({
@@ -16,6 +18,8 @@ export function LoginForm() {
   });
 
   const router = useRouter();
+  const { setUser } = useAuth();
+  const { user } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +29,7 @@ export function LoginForm() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //Body of POST request
     let payload = {
@@ -33,11 +37,14 @@ export function LoginForm() {
       password: formData.password, // Ensure this matches API expectations
     };
 
-    const response = login(payload);
+    const response = await login(payload);
     console.log("Login: ", response);
     const { token } = response;
-    localStorage.setItem("authToken", token);
-    router.push("/home");
+    const user = await getUser(token);
+    console.log("User Data:", user);
+    setUser(user);
+    // localStorage.setItem("authToken", token);
+    router.push("/");
   };
 
   return (
