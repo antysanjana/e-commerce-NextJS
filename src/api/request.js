@@ -59,6 +59,7 @@ export const getAllProducts = async () => {
   }
 };
 
+//API call for getting single product
 export const getSingleProduct = async ({ id }) => {
   const getSingleProuductURL = `${BASE_URL}/${PRODUCTS_API}/${id}`;
 
@@ -83,4 +84,32 @@ export const getUserData = async () => {
 
   try {
   } catch {}
+};
+
+//API for delete
+export const deleteProduct = async ({ id }) => {
+  const deleteProductURL = `${BASE_URL}/${PRODUCTS_API}/${id}`;
+  try {
+    const response = await fetch(deleteProductURL, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Network response was not ok. Status: ${response.status}`
+      );
+    }
+
+    const deletedProductData = await response.json();
+    return deletedProductData;
+
+    if (deletedProductData?.isDeleted) {
+      alert(
+        `${deletedProductData.title} Deleted on ${deletedProductData.deletedOn}!!`
+      );
+      router.push("/products");
+    }
+  } catch (error) {
+    console.error("Error occurred during fetching products:", error);
+  }
 };

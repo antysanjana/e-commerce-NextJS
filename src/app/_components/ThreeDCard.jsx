@@ -6,6 +6,7 @@ import { CardBody, CardContainer, CardItem } from "../../components/ui/3d-card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getSingleProduct } from "@/api/request";
+import { deleteProduct } from "@/api/request";
 
 export function ThreeDCardDemo({ id }) {
   const [product, setProduct] = useState([]);
@@ -13,28 +14,15 @@ export function ThreeDCardDemo({ id }) {
   const router = useRouter();
 
   const handleClick = async () => {
-    try {
-      const response = await fetch(getProductDataURL, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `Network response was not ok. Status: ${response.status}`
-        );
-      }
-
-      const deletedProductData = await response.json();
-
-      if (deletedProductData?.isDeleted) {
-        alert(
-          `${deletedProductData.title} Deleted on ${deletedProductData.deletedOn}!!`
-        );
-        router.push("/products");
-      }
-    } catch (error) {
-      console.error("Error occurred during fetching products:", error);
+    const deletedProductData = await deleteProduct({ id });
+    if (deletedProductData?.isDeleted) {
+      alert(
+        `${deletedProductData.title} Deleted on ${deletedProductData.deletedOn}!!`
+      );
+      router.push("/products");
     }
+    console.log("ID ", id);
+    deleteProduct({ id });
   };
 
   //API for getting single product
