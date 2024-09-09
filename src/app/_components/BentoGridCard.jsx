@@ -11,7 +11,8 @@ export function BentoGridCard() {
   const allProducts = async () => {
     try {
       const allProducts = await getAllProducts();
-      setItems(allProducts.products);
+      console.log("Products API Response: ", allProducts?.data?.products);
+      setItems(allProducts?.data?.products);
     } catch (error) {
       console.error("Error fetching products:", error);
     }

@@ -9,6 +9,15 @@ const axiosInstance = axios.create({
   },
 });
 
+const user = axios.create({
+  baseURL: BASE_URL,
+});
+
+const products = axios.create({
+  baseURL: BASE_URL,
+});
+
+//Login API
 export const login = ({ username, password }) => {
   const loginResponse = axiosInstance.post(LOGIN_API, {
     username,
@@ -18,39 +27,22 @@ export const login = ({ username, password }) => {
   return loginResponse;
 };
 
-export const getUser = async (token) => {
-  const getUserDataURL = `${BASE_URL}/${ME_API}`;
-  try {
-    const response = await fetch(getUserDataURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Login failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
+//Get User API
+export const getUser = (token) => {
+  const userData = user.get(ME_API, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log("User Data Axios: ", userData);
+  return userData;
 };
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-export const getAllProducts = async () => {
-  const getAllProuductsURL = `${BASE_URL}/${PRODUCTS_API}`;
-  try {
-    const response = await fetch(getAllProuductsURL);
-    if (!response.ok) {
-      throw new Error(`Products fetchimg failed: ${response.status}`);
-    }
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
+//API for all products
+export const getAllProducts = () => {
+  const allProducts = products.get(PRODUCTS_API);
+  console.log("All productsd Axios: ", allProducts);
+  return allProducts;
 };
 
 //API call for getting single product
