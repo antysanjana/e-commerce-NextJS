@@ -38,8 +38,8 @@ export function LoginForm() {
     };
 
     const response = await login(payload);
-    console.log("Login: ", response);
-    const { token } = response;
+    console.log("Login Form Received: ", response?.data);
+    const { token } = response?.data;
     const user = await getUser(token);
     console.log("User Data:", user);
     setUser(user);
