@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useAuth } from "@/providers/auth-provider";
 
 export function BackgroundBeamsDemo() {
-  const [userData, setUserData] = useState([]);
   const { user } = useAuth();
+  console.log("User Info: ", user);
 
   const userImageURL = user?.image;
 
@@ -23,7 +23,7 @@ export function BackgroundBeamsDemo() {
       </div>
       <div className="max-w-2xl mx-auto">
         <h1 className="relative py-6 z-10 md:text-7xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600  text-center font-sans font-semibold">
-          {userData?.company?.title}
+          {user?.company?.title}
         </h1>
         <p></p>
         <p className="text-neutral-500 max-w-lg mx-auto my-2 text-sm text-center relative z-10">
@@ -33,7 +33,7 @@ export function BackgroundBeamsDemo() {
           perferendis beatae tempora officia. Sunt, repellat.
         </p>
         <p className="text-neutral-400 text-center  w-full relative z-10 mt-4  bg-neutral-950">
-          hi@{userData.firstName}.com
+          hi@{user.firstName}.com
         </p>
       </div>
       <BackgroundBeams />

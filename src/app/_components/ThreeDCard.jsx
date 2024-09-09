@@ -13,15 +13,14 @@ export function ThreeDCardDemo({ id }) {
   const router = useRouter();
 
   const handleClick = async () => {
-    const deletedProductData = await deleteProduct({ id });
-    if (deletedProductData?.isDeleted) {
+    const deletedProductData = await deleteProduct(id);
+    console.log(deletedProductData);
+    if (deletedProductData?.data?.isDeleted) {
       alert(
-        `${deletedProductData.title} Deleted on ${deletedProductData.deletedOn}!!`
+        `${deletedProductData?.data?.title} Deleted on ${deletedProductData?.data?.deletedOn}!!`
       );
       router.push("/products");
     }
-    console.log("ID ", id);
-    deleteProduct({ id });
   };
 
   //API for getting single product

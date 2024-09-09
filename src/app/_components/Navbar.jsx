@@ -60,12 +60,12 @@ export function Navbar({ className }) {
               item={user ? "Go to" : "Login"}
               src={user ? user?.image : "/images/profile.jpg"}
             >
-              <div className="flex flex-col space-y-10 text-sm">
+              <div className="flex flex-col space-y-6 text-sm">
                 {user ? (
-                  <>
+                  <div className="flex flex-col space-y-4 text-sm">
                     <HoveredLink href="/profile">Profile</HoveredLink>
                     <HoveredLink href="/home">Logout</HoveredLink>
-                  </>
+                  </div>
                 ) : (
                   <HoveredLink href="/login">Login</HoveredLink>
                 )}

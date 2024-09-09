@@ -24,6 +24,13 @@ const productDetails = axios.create({
   },
 });
 
+const deleted = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 //Login API
 export const login = ({ username, password }) => {
   const loginResponse = axiosInstance.post(LOGIN_API, {
@@ -59,43 +66,9 @@ export const getSingleProduct = (id) => {
   return singleProduct;
 };
 
-//API call for getting single product
-// export const getSingleProduct = async ({ id }) => {
-//   const getSingleProuductURL = `${BASE_URL}/${PRODUCTS_API}/${id}`;
-
-//   try {
-//     const response = await fetch(getSingleProuductURL);
-
-//     if (!response.ok) {
-//       throw new Error(
-//         `Network response was not ok. Status: ${response.status}`
-//       );
-//     }
-
-//     const productData = await response.json();
-//     return productData;
-//   } catch (error) {
-//     console.error("Error occurred during fetching products:", error);
-//   }
-// };
-
 //API for delete
-export const deleteProduct = async ({ id }) => {
-  const deleteProductURL = `${BASE_URL}/${PRODUCTS_API}/${id}`;
-  try {
-    const response = await fetch(deleteProductURL, {
-      method: "DELETE",
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Network response was not ok. Status: ${response.status}`
-      );
-    }
-
-    const deletedProductData = await response.json();
-    return deletedProductData;
-  } catch (error) {
-    console.error("Error occurred during fetching products:", error);
-  }
+export const deleteProduct = (id) => {
+  const deleteProductData = deleted.delete(`products/${id}`);
+  console.log("Deleted Product Axios: ", deleteProductData);
+  return deleteProductData;
 };
