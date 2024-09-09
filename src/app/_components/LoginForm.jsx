@@ -37,12 +37,24 @@ export function LoginForm() {
       password: formData.password, // Ensure this matches API expectations
     };
 
-    const response = await login(payload);
-    const { token } = response?.data;
-    const user = await getUser(token);
-    console.log("User Data:", user.data);
-    setUser(user.data);
-    router.push("/");
+    try {
+      const response = await login(payload);
+      console.log("Response ", response);
+      const { token } = response?.data;
+      const user = await getUser(token);
+      console.log("User Data:", user.data);
+      setUser(user.data);
+      router.push("/");
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        console.log("Message ", error.response.data.message);
+        window.alert(error.response.data.message || "An error occurred");
+      } else {
+        console.error("Error:", error);
+        window.alert("An unexpected error occurred");
+      }
+      router.push("/");
+    }
   };
 
   return (
