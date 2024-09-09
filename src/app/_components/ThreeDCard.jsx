@@ -10,7 +10,6 @@ import { deleteProduct } from "@/api/request";
 
 export function ThreeDCardDemo({ id }) {
   const [product, setProduct] = useState([]);
-  const getProductDataURL = `https://dummyjson.com/products/${id}`;
   const router = useRouter();
 
   const handleClick = async () => {
@@ -27,9 +26,13 @@ export function ThreeDCardDemo({ id }) {
 
   //API for getting single product
   const singleProduct = async () => {
-    getSingleProduct({ id }).then((product) => {
-      setProduct(product);
-    });
+    try {
+      const singleProductData = await getSingleProduct(id);
+      console.log("Single product: ", singleProductData.data);
+      setProduct(singleProductData.data);
+    } catch (error) {
+      console.error("Error fetching single product:", error);
+    }
   };
 
   useEffect(() => {
