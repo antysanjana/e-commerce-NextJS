@@ -27,6 +27,13 @@ export function Navbar({ className }) {
                 item="Products"
               ></MenuItem>
             </Link>
+            <Link href={"/products_table"}>
+              <MenuItem
+                setActive={setActive}
+                active={active}
+                item="Products Table"
+              ></MenuItem>
+            </Link>
             <MenuItem setActive={setActive} active={active} item="Brands">
               <div className="flex flex-col space-y-4 text-sm">
                 <HoveredLink href="/web-dev">W7</HoveredLink>
@@ -41,13 +48,6 @@ export function Navbar({ className }) {
                 <HoveredLink href="/seo">Bath & Body</HoveredLink>
               </div>
             </MenuItem>
-            <Link href={"/"}>
-              <MenuItem
-                setActive={setActive}
-                active={active}
-                item="Blogs"
-              ></MenuItem>
-            </Link>
           </Menu>
         </div>
       </div>
